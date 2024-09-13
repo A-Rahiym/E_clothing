@@ -6,12 +6,14 @@ import './Navigation.scss'
 const Navigation = () => {
     return(
       <Fragment>
+        <h1>Navigation Panel</h1>
         <div className='navigation'>
           <Link className='logo-container' to="/">
           <Baglogo className='logo'/>
           </Link>
           <div className='nav-links-container'>
             <Link className='nav-link' to='/shop'>Shop</Link>
+            <Link className='nav-link' to='/sign-in'>Sign in</Link>
           </div>
         </div>
         <Outlet/>
