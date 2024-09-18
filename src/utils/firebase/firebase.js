@@ -1,8 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import {getAuth, 
-    signInWithRedirect, 
-    signInWithPopup,
-    GoogleAuthProvider} 
+       signInWithRedirect, 
+       signInWithPopup,
+       GoogleAuthProvider,
+      createUserWithEmailAndPassword} 
     from 'firebase/auth';
 
 import {
@@ -34,15 +35,16 @@ const firebaseConfig = {
 
 export const auth = getAuth(); // using same authentication function all across the webapp
 export const signInWithGooglePopup = () => signInWithPopup(auth,provider); // authenication function
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth,provider); // authenication function
 
-                      /// get database from firestore ///
+
+                                  /// get database from firestore ///
 export const db = getFirestore(); 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth,additionalInformation) => {
+  if(!userAuth) return;
   const userDocRef = doc(db, 'users',userAuth.uid) //  => get database , user document, 'unique identifier pointer'  
-  
   // get users info using user auth id
   const userSnapShot = await getDoc(userDocRef);
-
   // check if user exist in database
   if(!userSnapShot.exists()){
     const {displayName,email} = userAuth;
@@ -52,7 +54,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         userDocRef, {
           displayName,
           email,
-          createdAt
+          createdAt,
+          ...additionalInformation
         }
       )
     }catch(error){
@@ -61,3 +64,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   }
 return userDocRef;
 };
+
+export const createAuthUserWithEmailAndPassword = async(email,password) => {
+  if (!email || !password) return;
+return await createUserWithEmailAndPassword(auth,email,password)
+}
