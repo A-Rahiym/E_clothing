@@ -15,12 +15,14 @@ const defaultFormFields = {
 const SignUp = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
-    console.log("form fields:", formFields)
+    // console.log("form fields:", formFields)
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
 
+
+    // sign up using using information
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {

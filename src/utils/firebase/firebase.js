@@ -3,7 +3,9 @@ import {getAuth,
        signInWithRedirect, 
        signInWithPopup,
        GoogleAuthProvider,
-      createUserWithEmailAndPassword} 
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword
+      } 
     from 'firebase/auth';
 
 import {
@@ -32,40 +34,48 @@ const firebaseConfig = {
     prompt : "select_account"
   });
 
+  // AUTHENTICATOR
+  export const auth = getAuth();  
 
-export const auth = getAuth(); // using same authentication function all across the webapp
+/// SIGN IN OPTIONS ///
 export const signInWithGooglePopup = () => signInWithPopup(auth,provider); // authenication function
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth,provider); // authenication function
+export const SignInAuthUserWithEmailAndPassword = async(email,password) => {
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth,email,password)
+}
 
-
-                                  /// get database from firestore ///
-export const db = getFirestore(); 
-export const createUserDocumentFromAuth = async (userAuth,additionalInformation) => {
-  if(!userAuth) return;
-  const userDocRef = doc(db, 'users',userAuth.uid) //  => get database , user document, 'unique identifier pointer'  
-  // get users info using user auth id
-  const userSnapShot = await getDoc(userDocRef);
-  // check if user exist in database
-  if(!userSnapShot.exists()){
-    const {displayName,email} = userAuth;
-    const createdAt = new Date(); 
-    try{
-      await setDoc(
-        userDocRef, {
-          displayName,
-          email,
-          createdAt,
-          ...additionalInformation
-        }
-      )
-    }catch(error){
-      console.log('error Creating the user', error.message)
-    }
-  }
-return userDocRef;
-};
-
+/// CREATING USER WITH EMAIL AND PASSWORD ///
 export const createAuthUserWithEmailAndPassword = async(email,password) => {
   if (!email || !password) return;
-return await createUserWithEmailAndPassword(auth,email,password)
+  return await createUserWithEmailAndPassword(auth,email,password)
 }
+
+
+
+/// ACCESSING FIRESTORE DATABASE ///
+export const db = getFirestore(); 
+export const createUserDocumentFromAuth = async (userAuth,additionalInformation) => {
+if(!userAuth) return;
+const userDocRef = doc(db, 'users',userAuth.uid) //  => get database , user document, 'unique identifier pointer'  
+// get users info using user auth id
+const userSnapShot = await getDoc(userDocRef);
+// check if user exist in database
+if(!userSnapShot.exists()){
+const {displayName,email} = userAuth;
+const createdAt = new Date(); 
+try{
+await setDoc(
+userDocRef, {
+displayName,
+email,
+createdAt,
+...additionalInformation
+}
+)
+}catch(error){
+console.log('error Creating the user', error.message)
+}
+}
+// returns user document if it already exist 
+return userDocRef;
+};
