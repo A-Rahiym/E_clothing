@@ -1,9 +1,23 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import {ReactComponent as Baglogo} from '../../assets/Baglogo.svg'
+import { UserContext } from '../../contexts/user_context'
 import './Navigation.scss'
+import { signOutUser } from '../../utils/firebase/firebase'
+
+
+
 
 const Navigation = () => {
+  const {currentUser,setCurrentUser} = useContext(UserContext)
+  console.log(currentUser)
+
+  const signOutHandler = async() =>{
+    const res = await signOutUser();
+    console.log(res)
+    setCurrentUser(null)
+  }
+
     return(
       <Fragment>
         <h1>Navigation Panel</h1>
@@ -13,7 +27,10 @@ const Navigation = () => {
           </Link>
           <div className='nav-links-container'>
             <Link className='nav-link' to='/shop'>Shop</Link>
-            <Link className='nav-link' to='/auth'>Sign in</Link>
+            {
+              currentUser ? ( <span className='nav-link' onClick={signOutHandler}>Sign out</span>) :( 
+                <Link className='nav-link' to='/auth'>Sign in</Link>)
+            }
           </div>
         </div>
         <Outlet/>

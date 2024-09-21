@@ -1,14 +1,16 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useContext} from 'react';
+
+import FormInput from '../Form-Input/Form-Input';
+import Button from '../button/button';
+import { UserContext } from '../../contexts/user_context';
+
+import "./Sign-in.scss"
 import {
     createUserDocumentFromAuth,
     signInWithGooglePopup,
     SignInAuthUserWithEmailAndPassword
 } from '../../utils/firebase/firebase';
-
-import FormInput from '../Form-Input/Form-Input';
-import Button from '../button/button';
-import "./Sign-in.scss"
 
 
 const defaultFormFields = {
@@ -21,13 +23,20 @@ const SignIn = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
     // console.log("form fields:", formFields)
+    const {setCurrentUser} = useContext(UserContext)
 
 
     // sign in with google pop up
     const SignInWithGoogle = async () => {
+
+        // creating user auth object with google pop up
         const {user} = await signInWithGooglePopup();
+
+        // creating user document from auth object
         const response = await createUserDocumentFromAuth(user);
         console.log(response)
+        // save current user
+        setCurrentUser(user)
     };
 
     const resetFormFields = () => {
@@ -38,9 +47,8 @@ const SignIn = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await SignInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
-            resetFormFields();
+            const {user} = await SignInAuthUserWithEmailAndPassword(email, password);
+            setCurrentUser(user);
         } catch (error) {
             switch (error.code) {
                 case 'auth/wrong-password':
@@ -56,13 +64,10 @@ const SignIn = () => {
     };
 
 
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormFields({ ...formFields, [name]: value })
     };
-
-
 
     return (
         <div className='sign-up-container'>
