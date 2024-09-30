@@ -2,6 +2,8 @@ import React, { Fragment, useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import {ReactComponent as Baglogo} from '../../assets/Baglogo.svg'
 import { UserContext } from '../../contexts/user_context'
+import { CartContext } from '../../contexts/cart'
+
 import CartIcon from '../../components/cart-icon/cart-icon'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown'
 import './Navigation.scss'
@@ -11,7 +13,7 @@ import { signOutUser } from '../../utils/firebase/firebase'
 
 const Navigation = () => {
   const {currentUser} = useContext(UserContext)
-  console.log(currentUser)
+  const {isCartOpen} = useContext(CartContext)
 
   const signOutHandler = async() =>{
     await signOutUser();
@@ -31,7 +33,7 @@ const Navigation = () => {
             }
             <CartIcon/>
           </div>
-            <CartDropdown/>
+            {isCartOpen && <CartDropdown/>}
         </div>
         <Outlet/>
       </Fragment>
