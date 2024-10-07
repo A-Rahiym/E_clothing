@@ -10,6 +10,7 @@ const Checkout = () => {
         <div>
             <h1>checkout page</h1>
             {cartItems.map((item) => {
+                // for logical javascript implementation 
                 return (
                     <div className='checkout-item'>
                         <div className='border' />
