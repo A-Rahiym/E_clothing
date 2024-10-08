@@ -5,22 +5,18 @@ import './Checkout.scss'
 
 
 const Checkout = () => {
-    const { cartItems, addItemToCart,removeItemFromCart } = useContext(CartContext)
+    const { cartItems , cartTotal} = useContext(CartContext)
     return (
-        <div>
-            <h1>checkout page</h1>
-            {cartItems.map((item) => {
-                // for logical javascript implementation 
-                return (
-                    <div className='checkout-item'>
-                        <div className='border' />
-                        <span onClick={()=> removeItemFromCart(item)}> decrement </span>
-                        <CheckoutCard key={item.uid} product={item} />
-                        <span onClick={() => addItemToCart(item)}> Increment </span>
-                        <div className='border' />
-                    </div>
-                )
-            })}
+        <div className='checkout-container'>
+            <div className='checkout-header'>
+                <div className='header-block'><span>Product</span></div>
+                <div className='header-block'><span>Description</span></div>
+                <div className='header-block'><span>Quantity</span></div>
+                <div className='header-block'><span>Price</span></div>
+                <div className='header-block'><span>Remove</span></div>
+            </div>
+                {cartItems.map((cartItem)=>(<CheckoutCard key={cartItem.id} item={cartItem}/>))}
+            <span className='total'>Total: ${cartTotal}</span>
         </div>
     )
 }
