@@ -6,7 +6,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  
 } 
     from 'firebase/auth';
 
@@ -14,7 +15,12 @@ import {
   getFirestore,
   doc,   // get document from database
   getDoc, // access data in gotten document
-  setDoc  // modify gotten document
+  setDoc,  // modify gotten document
+  getDocs,
+  collection,
+  writeBatch,
+  query,
+  
 } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
@@ -88,3 +94,29 @@ console.log('error Creating the user', error.message)
 // returns user document if it already exist 
 return userDocRef;
 };
+
+// SAVING PRODUCT COLLECTION IN FIRESTORE
+export const addCollectionAndDocument = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  objectsToAdd.forEach((object)=>{
+    const docRef = doc(collectionRef,object.title.toLowerCase());
+    batch.set(docRef,object);
+  });
+  await batch.commit();
+  console.log("done")
+};
+
+// GETTING PRODUCT FROM FIRESTORE
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db,'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc,docSnapshot) =>{
+    const {title , items} = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  },{})
+  return categoryMap
+}
