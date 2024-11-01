@@ -120,3 +120,4 @@ export const getCategoriesAndDocuments = async () => {
   },{})
   return categoryMap
 }
+
