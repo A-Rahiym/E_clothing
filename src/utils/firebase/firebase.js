@@ -47,6 +47,7 @@ const firebaseConfig = {
 
 /// SIGN IN OPTIONS ///
 export const signInWithGooglePopup = () => signInWithPopup(auth,provider); // authenication function
+
 export const SignInAuthUserWithEmailAndPassword = async(email,password) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth,email,password)
