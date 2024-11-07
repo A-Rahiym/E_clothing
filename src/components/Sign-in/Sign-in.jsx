@@ -2,7 +2,8 @@ import React from 'react'
 import { useState,useContext} from 'react';
 
 import FormInput from '../Form-Input/Form-Input';
-import Button from '../button/button';
+import Button , {BUTTON_TYPE_CLASSES}  from '../button/button';
+
 import { UserContext } from '../../contexts/user_context';
 
 import "./Sign-in.scss"
@@ -29,8 +30,8 @@ const SignIn = () => {
     // sign in with google pop up
     const SignInWithGoogle = async () => {
         // creating user auth object with google pop up
+        console.log("button pressed")
         await signInWithGooglePopup();
-
         // creating user document from auth object
         
         // save current user
@@ -87,8 +88,8 @@ const SignIn = () => {
                     value={password} />
 
                 <div className='buttons-container'>
-                    <Button children='Sign in' buttonType='inverted' type='submit' />
-                    <Button type='button' buttonType={'google'} onClick={SignInWithGoogle}>Google Sign in</Button>
+                    <Button children='Sign in' buttonType={BUTTON_TYPE_CLASSES.inverted} type='submit' />
+                    <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={SignInWithGoogle}>Google Sign in</Button>
                 </div>
             </form>
         </div>

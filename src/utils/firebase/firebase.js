@@ -64,7 +64,7 @@ export const createAuthUserWithEmailAndPassword = async(email,password) => {
 /// CHANGE IN AUTHENTICATION LISTENER ///
 export const onAuthStateChangedListener = (callback) => {
   onAuthStateChanged(auth,callback) // calls callbacks when auth/object state changes
-  console.log(callback,"auth object:",auth)
+  // console.log(callback,"auth object:",auth)
 }
 
 
