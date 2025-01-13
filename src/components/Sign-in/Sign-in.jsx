@@ -10,7 +10,8 @@ import "./Sign-in.scss"
 import {
     createUserDocumentFromAuth,
     signInWithGooglePopup,
-    SignInAuthUserWithEmailAndPassword
+    SignInAuthUserWithEmailAndPassword,
+    signInWithGoogleRedirect
 } from '../../utils/firebase/firebase';
 
 
@@ -37,6 +38,10 @@ const SignIn = () => {
         // save current user
 
     };
+
+    const SigninWithRedirect = async () => {
+        await signInWithGoogleRedirect();
+    }
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
@@ -89,7 +94,7 @@ const SignIn = () => {
 
                 <div className='buttons-container'>
                     <Button children='Sign in' buttonType={BUTTON_TYPE_CLASSES.inverted} type='submit' />
-                    <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={SignInWithGoogle}>Google Sign in</Button>
+                    <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} Clicked={signInWithGoogleRedirect}>Google Sign in</Button>
                 </div>
             </form>
         </div>

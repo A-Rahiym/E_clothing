@@ -30,8 +30,6 @@ export const ItemCount = styled.span`
 
 
 
-
-
 // .cart-icon-container{
 //     width:45px;
 //     height: 45px;

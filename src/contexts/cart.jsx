@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-const addCartItems = (cartItems, productToAdd) => {
+const addCartItem = (cartItems, productToAdd) => {
     // find if cartitems contains productToadd
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
     // if card item exist
@@ -80,7 +80,7 @@ export const CartProvider = ({ children }) => {
 
     // adding items to cart
     const addItemToCart = (productToAdd) => {
-        setCartItems(addCartItems(cartItems, productToAdd));
+        setCartItems(addCartItem(cartItems, productToAdd));
     }
 
     // remove items from cart
