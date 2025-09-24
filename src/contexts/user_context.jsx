@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
-  const a = useReducer(userReducer, INITIAL_STATE);
+  // const a = useReducer(userReducer, INITIAL_STATE);
 
   const setCurrentUser = (user) => {
     dispatch(
@@ -46,7 +46,7 @@ export const UserProvider = ({ children }) => {
     );
   };
 
-  const value = { currentUser, setCurrentUser };
+const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
@@ -55,7 +55,7 @@ export const UserProvider = ({ children }) => {
       }
       setCurrentUser(user);
       console.log(user);
-      console.log("reducer", a);
+      // console.log("reducer", a);
     });
     return unsubscribe;
   }, []);

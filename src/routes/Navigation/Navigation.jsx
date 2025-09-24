@@ -1,8 +1,12 @@
 import React, { Fragment, useContext } from 'react'
 import {  Outlet } from 'react-router-dom'
 import { ReactComponent as Baglogo } from '../../assets/Baglogo.svg'
-import { UserContext } from '../../contexts/user_context'
+// import { UserContext } from '../../contexts/user_context'
 import { CartContext } from '../../contexts/cart'
+import state from '../../store/store'
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../store/user/user-selector'
+
 
 import CartIcon from '../../components/cart-icon/cart-icon'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown'
@@ -13,7 +17,8 @@ import { signOutUser } from '../../utils/firebase/firebase'
 
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext)
+  // const { currentUser } = useContext(UserContext)
+  const currentUser = useSelector(selectCurrentUser);
   const { isCartOpen } = useContext(CartContext)
 
   const signOutHandler = async () => {
