@@ -3,7 +3,7 @@ import "./Category_preview.scss"
 import ProductCard from '../Product-card/Product-card'
 import { Link } from 'react-router-dom'
 
-const CategoryPreview = ({title, products}) => {
+const CategoryPreview = ({title, products ={} }) => {
   return (
     <div className='category-preview-container'>
       <h2>

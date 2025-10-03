@@ -3,7 +3,7 @@ import {  Outlet } from 'react-router-dom'
 import { ReactComponent as Baglogo } from '../../assets/Baglogo.svg'
 // import { UserContext } from '../../contexts/user_context'
 import { CartContext } from '../../contexts/cart'
-import state from '../../store/store'
+
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../store/user/user-selector'
 
