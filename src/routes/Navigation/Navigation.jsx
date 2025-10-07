@@ -1,26 +1,20 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment} from 'react'
 import {  Outlet } from 'react-router-dom'
 import { ReactComponent as Baglogo } from '../../assets/Baglogo.svg'
-// import { UserContext } from '../../contexts/user_context'
-import { CartContext } from '../../contexts/cart'
-
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../store/user/user-selector'
-
-
 import CartIcon from '../../components/cart-icon/cart-icon'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown'
-// import './Navigation.scss'
 import { NavigationContainer, LogoContainer, NavLink, NavLinks, Logo } from './Navigation_style'
 import { signOutUser } from '../../utils/firebase/firebase'
+import { selectIsCartOpen } from '../../store/cart/cart selector'
+
 
 
 
 const Navigation = () => {
-  // const { currentUser } = useContext(UserContext)
   const currentUser = useSelector(selectCurrentUser);
-  const { isCartOpen } = useContext(CartContext)
-
+  const isCartOpen = useSelector(selectIsCartOpen);
   const signOutHandler = async () => {
     await signOutUser();
   }
@@ -47,6 +41,4 @@ const Navigation = () => {
     </Fragment>
   )
 }
-
-
 export default Navigation

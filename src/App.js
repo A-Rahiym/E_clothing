@@ -9,10 +9,13 @@ import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
 } from "./utils/firebase/firebase";
-import { setCurrentUser } from './store/user/user-action';
+// import { setCurrentUser } from './store/user/user-action';
+import { setCurrentUser } from './store/user/user-reducer';
 import { useDispatch } from 'react-redux';
 import { getCategoriesAndDocuments } from './utils/firebase/firebase';
 import { setCategoriesMap } from './store/categories/categories-action';
+import { PersistGate } from 'redux-persist/integration/react';
+
 
 
 
